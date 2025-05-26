@@ -137,15 +137,15 @@ function clearSuggestions() {
 }
 function showDetail(libro) {
   detailTitle.textContent = libro.TITULO;
-  // detailId.textContent = libro.ID_LIBRO;
-  // detailAutor.textContent = libro.AUTOR;
-  // detailEditorial.textContent = libro.EDITORIAL;
-  // detailProcedencia.textContent = libro.PROCEDENCIA;
+  detailId.textContent = libro.ID_LIBRO;
+  detailAutor.textContent = libro.AUTOR;
+  detailEditorial.textContent = libro.EDITORIAL;
+  detailProcedencia.textContent = libro.PROCEDENCIA;
   detailContainer.hidden = false;
 }
 function selectSuggestion(libro) {
+  searchInput.value = libro.TITULO
   clearSuggestions();
-  searchInput.value = "";
   showDetail(libro);
 }
 

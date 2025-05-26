@@ -13,9 +13,6 @@
     <link rel="preload" href="css/styles.css" as="style" />
     <link rel="stylesheet" href="css/styles.css" />
 
-    <style>
-
-    </style>
     <title>Biblioteca Electron</title>
 </head>
 
@@ -82,12 +79,14 @@
             </div>
         </div>
     </div>
+    
     <h2 style="margin-top: 15px;">Catálogo de Libros</h2>
+
     <div class="campo contenedor" style="margin-top: 25px">
         <label class="campo__label" style="color: black" for="text">Buscar Libro</label>
         <input class="campo__field" type="text" placeholder="Libros De Colegio Reyes de España" data-search />
-
     </div>
+
     <div class="contenedor">
         <ul data-suggestions hidden></ul>
     </div>
@@ -133,7 +132,6 @@
     <script>
         require("./rendererPrestamos.js");
         // require("./renderer.js")
-    </script>
+    </script> 
 </body>
-
 </html>
