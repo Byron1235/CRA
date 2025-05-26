@@ -1,0 +1,16 @@
+# 1. Limpia la primera ruta (si no está ya limpia, puedes repetir)
+git filter-branch --force --index-filter \
+  "git rm --cached --ignore-unmatch backend/node_modules/electron/dist/electron.exe" \
+  --prune-empty --tag-name-filter cat -- --all
+
+# 2. Ahora limpia la segunda ruta
+git filter-branch --force --index-filter \
+  "git rm --cached --ignore-unmatch backend/electron_app/node_modules/electron/dist/electron.exe" \
+  --prune-empty --tag-name-filter cat -- --all
+
+# 3. Borra refs originales y recoge basura
+rm -rf .git/refs/original/
+git reflog expire --expire=now --all
+git gc --prune=now --aggressive
+
+git push origin --force --all
