@@ -19,13 +19,12 @@ const detailProcedencia= detailContainer.querySelector("[data-procedencia]");
 const tablaBody        = document.querySelector("#tabla tbody");
 const formLibro        = document.getElementById("form-libro");
 
-const isopenbook = false
-
 // ——— 2) Cargar Workbook y datos de libros ———
 const wb    = XLSX.readFile(filePath);
 const ws    = wb.Sheets[LIBROS_SHEET];
 let data     = XLSX.utils.sheet_to_json(ws)
-                 .filter(r => Object.values(r).some(v => v!==null && v!==undefined && v!==""));
+  .filter(r => Object.values(r).some(v => v!==null && v!==undefined && v!=="")
+);
 
 // ——— 3) Función: renderizar tabla completa ———
 function renderTable() {

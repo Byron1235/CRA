@@ -69,6 +69,18 @@ ul[data-suggestions] li:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+.dev{
+    display: flex;
+    flex-direction: column;
+    max-width: 20rem;
+    margin: auto;
+
+
+}
+.devolucion{
+    width: 20rem;
+}
+
 
 .bordes{
     display: flex;
@@ -153,8 +165,8 @@ ul[data-suggestions] li:hover {
 }
 }
 
-.agregar_libro input,.agregar_usuario input,
-.agregar_libro button,.agregar_usuario button {
+input,.agregar_usuario input,
+ button,button {
   width: 100%;
   box-sizing: border-box;
 }
@@ -170,10 +182,17 @@ ul[data-suggestions] li:hover {
     max-width: 1000px;
     margin: 0 auto;
     }
+
+    .agregar_prestamo .ver_rut {
+        grid-column: 1;
+        
+        grid-row: 2;
+    }
     .agregar_prestamo .ver_libro {
         grid-column:2 ;
         grid-row: 2/3;  
     }
+
     .agregar_prestamo .boton{
         grid-column: 2/4;
         grid-row: 3;

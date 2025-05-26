@@ -5,13 +5,13 @@ const path = require("path");
 // ——— Constantes de DOM ———
 const filePath = path.join(__dirname, "Biblioteca.xlsx");
 const formUsuarios = document.getElementById("form-usuarios");
+const LIBROS_SHEET3 = "USUARIOS"; // ← cambia esto si tu hoja se llama distinto
 
 // ——— 1) Carga y limpieza del Excel ———
 const wb = XLSX.readFile(filePath);
-const wsName = "USUARIOS";
-const ws = wb.Sheets[wsName];
-let usuariosData = XLSX.utils.sheet_to_json(ws).filter(r =>
-  Object.values(r).some(c => c !== null && c !== undefined && c !== "")
+const ws = [LIBROS_SHEET3];
+let usuariosData = XLSX.utils.sheet_to_json(ws).
+filter(r => Object.values(r).some(v => v !== null && v !== undefined && v !== "")
 );
 
 // ——— 2) Renderizar tabla de usuarios ———
@@ -41,11 +41,12 @@ formUsuarios.addEventListener("submit", e => {
   };
   usuariosData.push(nuevo);
 
-  // Reescribir Excel
-  const newWs = XLSX.utils.json_to_sheet(usuariosData, { skipHeader: false });
-  const newWb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(newWb, newWs, wsName);
-  XLSX.writeFile(newWb, filePath);
+  // 5.1) Reemplazar sólo la hoja “PRESTAMOS” en el workbook
+  const newSheet = XLSX.utils.json_to_sheet(usuariosData, { skipHeader: false });
+  wb.Sheets[LIBROS_SHEET3] = newSheet;
+
+  // 5.2) Guardar TODO el archivo sin perder otras hojas
+  XLSX.writeFile(wb, filePath);
 
   // Refrescar UI
   formUsuarios.reset();

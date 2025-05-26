@@ -7,12 +7,12 @@ const LIBROS_SHEET = "PRESTAMOS"; // ← cambia esto si tu hoja se llama distint
 const LIBROS_SHEET2 = "CATALOGO"; // ← cambia esto si tu hoja se llama distinto
 const LIBROS_SHEET3 = "USUARIOS"; // ← cambia esto si tu hoja se llama distinto
 
-//search-input (libros)
-//search-input2 (rut)
 
 // ——— 1) Rutas y nodos del DOM ———
 const filePath = path.join(__dirname, "Biblioteca.xlsx");
+//search-input (libros)
 const searchInput = document.querySelector("[data-search]");
+//search-input2 (rut)
 const searchInput2 = document.querySelector("[data-search2]");
 const suggestionsList = document.querySelector("[data-suggestions]");
 const suggestionsList2 = document.querySelector("[data-suggestions2]");
