@@ -1,1 +1,6 @@
+
+# Ignora todos los .exe
 *.exe
+
+# Ignora toda la carpeta node_modules (es estándar y recomendadísimo)
+node_modules/
