@@ -31,8 +31,8 @@ const tablaBody = document.querySelector("#tabla tbody");
 const formPrestamo = document.getElementById("form-prestamos");
 
 // ——— 2) Cargar Workbook y datos de libros ———
-const wb = XLSX.readFile(filePath);
-const ws = wb.Sheets[LIBROS_SHEET];
+const wb  = XLSX.readFile(filePath);
+const ws  = wb.Sheets[LIBROS_SHEET];
 const ws2 = wb.Sheets[LIBROS_SHEET2];
 const ws3 = wb.Sheets[LIBROS_SHEET3];
 
@@ -72,8 +72,8 @@ renderTable();
 // Función para mostrar detalles opcional
 function showDetail2(usuario) {
   detailRut.textContent = usuario.RUT || "";
-  detailNombre.textContent = usuario.NOMBRE || "";
-  detailApellido.textContent = usuario.APELLIDO || "";
+  detailNombre.textContent  = usuario.NOMBRE || "";
+  detailApellido.textContent  = usuario.APELLIDO || "";
   detailCurso.textContent = usuario.CURSO || "";
   detailContainer2.hidden = false;
 }

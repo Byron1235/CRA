@@ -11,7 +11,9 @@ const LIBROS_SHEET3 = "USUARIOS"; // ← cambia esto si tu hoja se llama distint
 //search-input2 (rut)
 
 // ——— 1) Rutas y nodos del DOM ———
+// Cargamos el archivo .xlsx
 const filePath = path.join(__dirname, "Biblioteca.xlsx");
+
 const searchInput = document.querySelector("[data-search]");
 const searchInput2 = document.querySelector("[data-search2]");
 const suggestionsList = document.querySelector("[data-suggestions]");
