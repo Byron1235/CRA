@@ -142,7 +142,9 @@ function mostrarUsuarioEditar(usuario) {
   document.getElementById("nombreEditar").value = usuario.NOMBRE || "";
   document.getElementById("apellidoEditar").value = usuario.APELLIDO || "";
   document.getElementById("cursoEditar").value = usuario.CURSO || "";
-
+  document.getElementById("nombreEditar").disabled = false;
+  document.getElementById("apellidoEditar").disabled = false;
+  document.getElementById("cursoEditar").disabled = false;
   detailEditar.hidden = false;
 }
 
@@ -171,4 +173,7 @@ formEditar.addEventListener("submit", (e) => {
   formEditar.reset();
   detailEditar.hidden = true;
   alert("Usuario editado correctamente.");
+    document.getElementById("nombreEditar").disabled = true;
+  document.getElementById("apellidoEditar").disabled = true;
+  document.getElementById("cursoEditar").disabled = true;
 });
