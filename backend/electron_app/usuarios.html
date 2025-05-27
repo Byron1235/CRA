@@ -52,10 +52,24 @@
                 <div class="centrar">
                     <form id="formEliminar" class="eliminar">
                         
-                            <input type="text" class="centrar-texto" placeholder="RUT" id="rut" required />
+                            <input type="text" class="centrar-texto" placeholder="RUT" id="rutEliminar" required data-search2/>
 
                             <button type="submit" id="borrar" class="boton red ">Eliminar</button>
 
+                            <div class="ver_rut">
+
+                            <div class="contenedor">
+                            <ul data-suggestions2  hidden></ul>
+                            <div data-user-cards-container></div>
+                            <div class="detail" data-detail2 hidden>
+                                <h2 data-rut></h2>
+                                <p><strong>Nombre:</strong> <span data-nombre></span></p>
+                                <p><strong>Apellido:</strong> <span data-apellido></span></p>
+                                <p><strong>Curso:</strong> <span data-curso></span></p>
+                            </div>
+
+                        </div>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -63,15 +77,29 @@
 
         <div>
             <h2 style="margin-bottom: 10px">Editar Usuario</h2>
-            <form id="form-libro" class="agregar_usuario ">
-                <input type="text" class="centrar-texto" placeholder="RUT" id="rut" required />
-                <input type="text" class="centrar-texto" disabled placeholder="NOMBRE" id="nombre" required />
-                <input type="text" class="centrar-texto" disabled placeholder="APELLIDO" id="apellido" required />
-                <input type="text" class="centrar-texto" disabled placeholder="CURSO" id="curso" required />
-                <button type="submit" class="boton"
-                    style="margin-bottom: 10px; background-color: orange;">Confirmar</button>
+            <form id="formEditar" class="editar_usuario">
+                <input type="text" class="centrar-texto" placeholder="RUT" id="rutEditar" required data-search-editar />
+                <button type="submit" class="boton" style="margin-bottom: 10px; background-color: orange;">Confirmar</button>
+
+                <input type="text" class="centrar-texto" disabled placeholder="NOMBRE" id="nombreEditar" required />
+                <input type="text" class="centrar-texto" disabled placeholder="APELLIDO" id="apellidoEditar" required />
+                <input type="text" class="centrar-texto" disabled placeholder="CURSO" id="cursoEditar" required />
+
+                
+                <div class="ver_editar">
+                    <div class="contenedor">
+                        <ul data-suggestions2-editar hidden></ul>
+                        <div data-user-cards-container-editar></div>
+                        <div class="detail" data-detail2-editar hidden>
+                        <h2 data-rut></h2>
+                        <p><strong>Nombre:</strong> <span data-nombre></span></p>
+                        <p><strong>Apellido:</strong> <span data-apellido></span></p>
+                        <p><strong>Curso:</strong> <span data-curso></span></p>
+                        </div>
+                    </div>
+                </div>
             </form>
-        </div>
+            </div>
     </div>
 
     <script>
