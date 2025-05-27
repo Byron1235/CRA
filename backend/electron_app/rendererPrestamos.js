@@ -1,4 +1,4 @@
-// renderer.js
+// rendererPrestamo.js
 const XLSX = require("xlsx");
 const path = require("path");
 

@@ -40,7 +40,7 @@ h1,h2,h3 {
     text-align: center;
 }
 
-ul[data-suggestions],[data-suggestions2] {
+ul[data-suggestions],[data-suggestions2],[data-suggestions2-editar] {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -51,13 +51,13 @@ ul[data-suggestions],[data-suggestions2] {
     border-radius: 0 0 8px 8px;
 }
 
-ul[data-suggestions] li,[data-suggestions2] li {
+ul[data-suggestions] li,[data-suggestions2] li ,[data-suggestions2-editar] li{
     padding: 0.5rem;
     cursor: pointer;
     background: #fff;
 }
 
-ul[data-suggestions] li:hover,[data-suggestions2]  li:hover {
+ul[data-suggestions] li:hover,[data-suggestions2]  li:hover, [data-suggestions2-editar] li:hover {
     background: #eee;
 }
 
@@ -68,6 +68,8 @@ ul[data-suggestions] li:hover,[data-suggestions2]  li:hover {
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .dev{
     display: flex;
@@ -141,6 +143,34 @@ ul[data-suggestions] li:hover,[data-suggestions2]  li:hover {
 }
 
 @media (min-width: 480px), (max-width:480px) {
+    .editar_usuario{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    }
+}
+@media (min-width: 768px) {
+    .editar_usuario{
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    }
+    .editar_usuario .boton {
+        grid-row: 3;
+        grid-column:2/4 ;  
+    }
+    .editar_usuario .ver_editar{
+        grid-row: 2;
+        grid-column: 1;
+    }
+}
+
+@media (min-width: 480px), (max-width:480px) {
     .agregar_libro{
     display: flex;
     flex-direction: column;
@@ -197,7 +227,9 @@ input,.agregar_usuario input,
         grid-column: 2/4;
         grid-row: 3;
     }
-
+    .agregar_prestamo .ver_usuario{
+        grid-template-columns: 4;
+    }
     
 
 }
