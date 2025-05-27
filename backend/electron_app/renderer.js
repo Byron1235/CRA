@@ -56,7 +56,6 @@ function showDetail(libro) {
 }
 function selectSuggestion(libro) {
   clearSuggestions();
-  searchInput.value = "";
   showDetail(libro);
 }
 
