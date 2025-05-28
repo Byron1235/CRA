@@ -75,7 +75,10 @@ ul[data-suggestions] li:hover,[data-suggestions2]  li:hover, [data-suggestions2-
   transition: opacity 0.5s ease;
   z-index: 1000;
 }
-
+#toast.show {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 .detail {
     margin-top: 1.5rem;

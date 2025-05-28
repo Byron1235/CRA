@@ -30,6 +30,16 @@ const detailCurso = detailContainer2.querySelector("[data-curso]");
 const tablaBody = document.querySelector("#tabla tbody");
 const formPrestamo = document.getElementById("form-prestamos");
 
+function showToast(message, duration = 3000) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, duration);
+}
+
 // ——— 2) Cargar Workbook y datos de libros ———
 const wb  = XLSX.readFile(filePath);
 const ws  = wb.Sheets[LIBROS_SHEET];
@@ -205,5 +215,5 @@ formPrestamo.addEventListener("submit", (e) => {
   // 5.3) Refrescar UI
   formPrestamo.reset();
   renderTable();
-  showToast("Prestamo agregado correctamente.")
+  showToast("Devuelto correctamente.")
 });
