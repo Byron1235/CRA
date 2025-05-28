@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
-function createWindow () {
+async function createWindow () {
   const win = new BrowserWindow({
     width: 1280,
     height: 720,
@@ -11,7 +11,8 @@ function createWindow () {
     }
   });
 
-  win.loadFile('index.html');
+  await win.loadFile('index.html');
 }
 
 app.whenReady().then(createWindow);
+

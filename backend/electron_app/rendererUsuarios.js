@@ -17,6 +17,19 @@ const searchEditar = document.querySelector("[data-search-editar]");
 const suggestionsListEditar = document.querySelector("[data-suggestions2-editar]");
 const detailEditar = document.querySelector("[data-detail2-editar]");
 
+// Función para mostrar toast
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  toast.style.pointerEvents = 'auto';
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.pointerEvents = 'none';
+  }, 2500);
+}
+
 // ——— 1) Cargar y limpiar Excel ———
 const wb = XLSX.readFile(filePath);
 const ws = wb.Sheets[LIBROS_SHEET3];
@@ -41,7 +54,8 @@ formUsuarios.addEventListener("submit", (e) => {
   XLSX.writeFile(wb, filePath);
 
   formUsuarios.reset();
-  alert("Usuario agregado correctamente.");
+
+  showToast("Usuario agregado correctamente.");
 });
 
 // ——— 3) Autocompletado para eliminar ———
@@ -55,9 +69,9 @@ searchInputEliminar.addEventListener("input", (e) => {
     return;
   }
 
- const matches = usuariosData
-  .filter((u) => u.RUT && u.RUT.toLowerCase().includes(value))
-  .slice(0, 4); // ← Mostrar solo 4
+  const matches = usuariosData
+    .filter((u) => u.RUT && u.RUT.toLowerCase().includes(value))
+    .slice(0, 4); // ← Mostrar solo 4
 
   matches.forEach((usuario) => {
     const li = document.createElement("li");
@@ -89,11 +103,9 @@ formEliminar.addEventListener("submit", (e) => {
   const index = usuariosData.findIndex((u) => u.RUT === rutEliminar);
 
   if (index === -1) {
-    alert("Usuario no encontrado.");
+    showToast("Usuario no encontrado para eliminar.");
     return;
   }
-
-  if (!confirm(`¿Seguro que deseas eliminar al usuario con RUT: ${rutEliminar}?`)) return;
 
   usuariosData.splice(index, 1);
   const newSheet = XLSX.utils.json_to_sheet(usuariosData, { skipHeader: false });
@@ -102,7 +114,7 @@ formEliminar.addEventListener("submit", (e) => {
 
   formEliminar.reset();
   detailEliminar.hidden = true;
-  alert("Usuario eliminado correctamente.");
+  showToast("Usuario eliminado correctamente.");
 });
 
 // ——— 5) Autocompletado para editar ———
@@ -117,8 +129,8 @@ searchEditar.addEventListener("input", (e) => {
   }
 
   const matches = usuariosData
-  .filter((u) => u.RUT && u.RUT.toLowerCase().includes(value))
-  .slice(0, 4);
+    .filter((u) => u.RUT && u.RUT.toLowerCase().includes(value))
+    .slice(0, 4);
   matches.forEach((usuario) => {
     const li = document.createElement("li");
     li.textContent = usuario.RUT;
@@ -155,7 +167,7 @@ formEditar.addEventListener("submit", (e) => {
   const index = usuariosData.findIndex((u) => u.RUT === rut);
 
   if (index === -1) {
-    alert("Usuario no encontrado.");
+    showToast("Usuario no encontrado para editar.");
     return;
   }
 
@@ -172,8 +184,9 @@ formEditar.addEventListener("submit", (e) => {
 
   formEditar.reset();
   detailEditar.hidden = true;
-  alert("Usuario editado correctamente.");
-    document.getElementById("nombreEditar").disabled = true;
+  document.getElementById("nombreEditar").disabled = true;
   document.getElementById("apellidoEditar").disabled = true;
   document.getElementById("cursoEditar").disabled = true;
+
+  showToast("Usuario editado correctamente.");
 });
