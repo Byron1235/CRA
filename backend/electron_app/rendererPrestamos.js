@@ -207,5 +207,6 @@ formPrestamo.addEventListener("submit", (e) => {
   // 5.3) Refrescar UI
   formPrestamo.reset();
   renderTable();
-  alert("Prestamo agregado correctamente.");
+
+  showToast("Prestamo agregado correctamente.")
 });
