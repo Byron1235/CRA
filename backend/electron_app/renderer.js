@@ -115,7 +115,7 @@ formLibro.addEventListener("submit", e => {
   // 5.3) Refrescar UI
   formLibro.reset();
   renderTable();
-  alert("Libro agregado correctamente.");
   
+  showToast("Libro agregado correctamente.");
 
 });
