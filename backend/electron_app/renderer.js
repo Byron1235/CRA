@@ -1,12 +1,10 @@
-
-// renderer.js
 const XLSX = require("xlsx");
 const path = require("path");
 
-// ——— 0) Definir nombre de hoja de libros ———
-const LIBROS_SHEET = "CATALOGO"; // ← cambia esto si tu hoja se llama distinto
+// ——— 0) Nombre de hoja ———
+const LIBROS_SHEET = "CATALOGO";
 
-// ——— 1) Rutas y nodos del DOM ———
+// ——— 1) Nodos del DOM ———
 const filePath         = path.join(__dirname, "Biblioteca.xlsx");
 const searchInput      = document.querySelector("[data-search]");
 const suggestionsList  = document.querySelector("[data-suggestions]");
@@ -18,30 +16,84 @@ const detailEditorial  = detailContainer.querySelector("[data-editorial]");
 const detailProcedencia= detailContainer.querySelector("[data-procedencia]");
 const tablaBody        = document.querySelector("#tabla tbody");
 const formLibro        = document.getElementById("form-libro");
+const btnEliminar      = document.getElementById("btn-eliminar");
+const btnEditar        = document.getElementById("btn-editar");
+const btnSubmit        = document.getElementById("btn-submit");
+const inputIdLibro     = document.getElementById("id_libro");
 
+const confirmModal = document.getElementById("confirmModal");
+const confirmYes = document.getElementById("confirmYes");
+const confirmNo = document.getElementById("confirmNo");
+
+btnEliminar.addEventListener("click", () => {
+  const id = formLibro.querySelector("#id_libro").value.trim();
+
+  if (!id) {
+    showToast("Ingresa un ID válido");
+    return;
+  }
+
+  // Guardamos el ID temporalmente para usarlo en el botón “Sí”
+  confirmModal.dataset.id = id;
+
+  // Mostrar modal
+  confirmModal.style.display = "flex";
+});
+confirmYes.addEventListener("click", () => {
+  const id = confirmModal.dataset.id;
+  const index = data.findIndex(libro => libro.ID_LIBRO === id);
+
+  if (index === -1) {
+    showToast("Libro no encontrado.");
+    confirmModal.style.display = "none";
+    return;
+  }
+
+  data.splice(index, 1);
+
+  const newSheet = XLSX.utils.json_to_sheet(data, { skipHeader: false });
+  wb.Sheets[LIBROS_SHEET] = newSheet;
+  XLSX.writeFile(wb, filePath);
+
+  formLibro.reset();
+  renderTable();
+  btnSubmit.textContent = "Agregar";
+
+  showToast("Libro eliminado correctamente.");
+  confirmModal.style.display = "none";
+});
+
+
+
+
+confirmNo.addEventListener("click", (e) => {
+  e.preventDefault(); // previene cualquier comportamiento por defecto
+  confirmModal.style.display = "none";
+});
+
+
+
+// ——— 2) Función Toast ———
 function showToast(message, duration = 3000) {
   const toast = document.getElementById("toast");
   toast.textContent = message;
   toast.classList.add("show");
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, duration);
+  setTimeout(() => toast.classList.remove("show"), duration);
 }
 
-// ——— 2) Cargar Workbook y datos de libros ———
+// ——— 3) Leer datos ———
 const wb    = XLSX.readFile(filePath);
 const ws    = wb.Sheets[LIBROS_SHEET];
-let data     = XLSX.utils.sheet_to_json(ws)
-  .filter(r => Object.values(r).some(v => v!==null && v!==undefined && v!=="")
+let data    = XLSX.utils.sheet_to_json(ws).filter(r =>
+  Object.values(r).some(v => v !== null && v !== undefined && v !== "")
 );
 
-// ——— 3) Función: renderizar tabla completa ———
+// ——— 4) Renderizar tabla ———
 function renderTable() {
   tablaBody.innerHTML = "";
   data.forEach(row => {
     const tr = document.createElement("tr");
-    ["ID_LIBRO","TITULO","AUTOR","EDITORIAL","PROCEDENCIA"].forEach(f => {
+    ["ID_LIBRO", "TITULO", "AUTOR", "EDITORIAL", "PROCEDENCIA"].forEach(f => {
       const td = document.createElement("td");
       td.textContent = row[f] || "";
       tr.appendChild(td);
@@ -51,7 +103,7 @@ function renderTable() {
 }
 renderTable();
 
-// ——— 4) Funciones de búsqueda/autocomplete y detalle ———
+// ——— 5) Búsqueda y detalle ———
 function clearSuggestions() {
   suggestionsList.innerHTML = "";
   suggestionsList.hidden = true;
@@ -68,7 +120,6 @@ function selectSuggestion(libro) {
   clearSuggestions();
   showDetail(libro);
 }
-
 searchInput.addEventListener("input", e => {
   const q = e.target.value.trim().toLowerCase();
   clearSuggestions();
@@ -95,16 +146,23 @@ searchInput.addEventListener("input", e => {
   });
   suggestionsList.hidden = false;
 });
-
 document.addEventListener("click", e => {
   if (!suggestionsList.contains(e.target) && e.target !== searchInput) {
     clearSuggestions();
   }
 });
 
-// ——— 5) Manejo del formulario: agregar nuevo libro ———
+// ——— 6) Detectar si ID ya existe y cambiar texto del botón ———
+inputIdLibro.addEventListener("input", () => {
+  const id = inputIdLibro.value.trim();
+  const existe = data.some(r => r.ID_LIBRO === id);
+  btnSubmit.textContent = existe ? "Guardar" : "Agregar";
+});
+
+// ——— 7) Envío formulario ———
 formLibro.addEventListener("submit", e => {
   e.preventDefault();
+
   const nuevo = {
     ID_LIBRO:    formLibro.querySelector("#id_libro").value,
     TITULO:      formLibro.querySelector("#titulo").value,
@@ -113,19 +171,58 @@ formLibro.addEventListener("submit", e => {
     PROCEDENCIA: formLibro.querySelector("#procedencia").value,
   };
 
-  data.push(nuevo);
+  const index = data.findIndex(r => r.ID_LIBRO === nuevo.ID_LIBRO);
+  if (index !== -1) {
+    data[index] = nuevo;
+    showToast("Libro editado correctamente.");
+  } else {
+    data.push(nuevo);
+    showToast("Libro agregado correctamente.");
+  }
 
-  // 5.1) Reemplazar sólo la hoja “CATALOGO” en el workbook
   const newSheet = XLSX.utils.json_to_sheet(data, { skipHeader: false });
   wb.Sheets[LIBROS_SHEET] = newSheet;
-
-  // 5.2) Guardar TODO el archivo sin perder otras hojas
   XLSX.writeFile(wb, filePath);
 
-  // 5.3) Refrescar UI
   formLibro.reset();
   renderTable();
-  
-  showToast("Libro agregado correctamente.");
-
+  btnSubmit.textContent = "Agregar";
 });
+
+// ——— 8) Botón Eliminar por ID ———
+
+inputIdLibro.addEventListener("input", () => {
+  const id = inputIdLibro.value.trim();
+  const libro = data.find(r => r.ID_LIBRO === id);
+
+  if (libro) {
+    // Si el libro existe, rellena inputs con sus datos
+    formLibro.querySelector("#titulo").value      = libro.TITULO || "";
+    formLibro.querySelector("#autor").value       = libro.AUTOR || "";
+    formLibro.querySelector("#editorial").value   = libro.EDITORIAL || "";
+    formLibro.querySelector("#procedencia").value = libro.PROCEDENCIA || "";
+    btnSubmit.textContent = "Guardar";
+  } else {
+    // Si no existe, limpia inputs menos el ID
+    formLibro.querySelector("#titulo").value      = "";
+    formLibro.querySelector("#autor").value       = "";
+    formLibro.querySelector("#editorial").value   = "";
+    formLibro.querySelector("#procedencia").value = "";
+    btnSubmit.textContent = "Agregar";
+  }
+});
+// // ——— 9) Botón Editar por ID ———
+// btnEditar?.addEventListener("click", () => {
+//   const id = formLibro.querySelector("#id_libro").value.trim();
+//   if (!id) return showToast("Ingresa un ID válido");
+
+//   const libro = data.find(r => r.ID_LIBRO === id);
+//   if (!libro) return showToast("Libro no encontrado");
+
+//   formLibro.querySelector("#titulo").value      = libro.TITULO || "";
+//   formLibro.querySelector("#autor").value       = libro.AUTOR || "";
+//   formLibro.querySelector("#editorial").value   = libro.EDITORIAL || "";
+//   formLibro.querySelector("#procedencia").value = libro.PROCEDENCIA || "";
+
+//   btnSubmit.textContent = "Guardar";
+// });

@@ -37,16 +37,55 @@
         <div class="jumbotron">
             <div class="datos">
                 <h2 style="margin-bottom: 10px">devolucion</h2>
-                <form id="form-prestamos" class=" dev">
-                    <input type="text" class="centrar-texto devolucion" placeholder="ID" id="dev" required data-search2/>
-                    <button type="submit" class="boton">Recibir</button>
+                <form id="form-prestamos" class="dev ">
+                    <input type="text" class="centrar-texto" placeholder="RUT" id=""  data-search2 />
+
+
+                    <button type="submit" class="boton">Agregar</button>
+
+
+                    <div class="ver_rut">
+
+                        <div class="contenedor">
+                            <ul data-suggestions2  hidden></ul>
+                            <div data-user-cards-container></div>
+                            <div class="detail" data-detail2 hidden>
+                                <h2 data-rut></h2>
+                                <p><strong>Nombre:</strong> <span data-nombre></span></p>
+                                <p><strong>Apellido:</strong> <span data-apellido></span></p>
+                                <p><strong>Curso:</strong> <span data-curso></span></p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="ver_libro">
+
+                        <div class="contenedor">
+                            <ul data-suggestions hidden></ul>
+                            <div data-user-cards-container></div>
+                            <div class="detail" data-detail hidden>
+                                <h2 data-title></h2>
+                                <p><strong>ID:</strong> <span data-id></span></p>
+                                <p><strong>Autor:</strong> <span data-autor></span></p>
+                                <p><strong>Editorial:</strong> <span data-editorial></span></p>
+                                <p><strong>Procedencia:</strong> <span data-procedencia></span></p>
+                            </div>
+
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <h2 style="padding: 25px; margin-top: 25px;">prestamos de Libros</h2>
     
+    <h2 style="margin-top: 15px;">Catálogo de Libros</h2>
+
+    <div class="campo contenedor" style="margin-top: 25px">
+        <label class="campo__label" style="color: black" for="text">Buscar Libro</label>
+        <input class="campo__field" type="text" placeholder="Libros De Colegio Reyes de España" data-search />
+    </div>
+
     <div class="contenedor">
         <ul data-suggestions hidden></ul>
     </div>
@@ -61,6 +100,7 @@
             <p><strong>Procedencia:</strong> <span data-procedencia></span></p>
         </div>
 
+
         <template data-user-template>
             <div class="card">
                 <h3 data-title></h3>
@@ -69,7 +109,6 @@
                 <p><strong>Editorial:</strong> <span data-editorial></span></p>
             </div>
         </template>
-
         <table border="1" id="tabla" class="table table-striped ">
             <thead>
                 <tr>
@@ -83,16 +122,16 @@
                 <!-- Aquí se insertarán los datos -->
             </tbody>
         </table>
-    </div>
 
+    </div>
     <div class="contenedor centrar">
         <a class="boton red" href="index.html">VOLVER</a>
     </div>
-
+    </div>
     <script>
         require("./rendererDevolucion.js");
-    </script>
+        // require("./renderer.js")
+    </script> 
     <div id="toast"></div>
 </body>
-
 </html>

@@ -46,7 +46,19 @@
                     <input type="text" class="centrar-texto" placeholder="AUTOR" id="autor" required />
                     <input type="text" class="centrar-texto" placeholder="EDITORIAL" id="editorial" required />
                     <input type="text" class="centrar-texto" placeholder="PROCEDENCIA" id="procedencia" required />
-                    <button type="submit" class="boton">Agregar</button>
+                    <button type="submit" id="btn-submit" class="boton">Agregar</button>
+                    <button type="submit" id="btn-eliminar" class="boton red">Eliminar</button>
+
+                    <div id="confirmModal" class="modal">
+                    <div class="modal-content">
+                        <p>¿Estás seguro de que deseas eliminar este libro?</p>
+                        <button id="confirmYes" class="boton red">Sí</button>
+                        <button id="confirmNo" class="boton red" style="background-color: rgb(32, 127, 209);">Cancelar</button>
+                    </div>
+                    </div>
+
+
+
                 </form>
             </div>
         </div>

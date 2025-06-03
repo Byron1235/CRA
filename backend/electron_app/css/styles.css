@@ -253,7 +253,30 @@ input,.agregar_usuario input,
 
 }
 
+.modal {
+  display: none; /* oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
 
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  margin: auto;
+  border-radius: 0.5rem;
+  max-width: 350px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
 
 .campo {
     display: flex;
@@ -303,7 +326,7 @@ input,.agregar_usuario input,
 }
 
 
-.boton {
+.boton{
     background-color: var(--boton);
     color: var(--blanco);
     padding: 1rem 2rem;

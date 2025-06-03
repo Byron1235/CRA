@@ -145,53 +145,7 @@ function clearSuggestions() {
   suggestionsList.innerHTML = "";
   suggestionsList.hidden = true;
 }
-function showDetail(libro) {
-  detailTitle.textContent = libro.TITULO;
-  // detailId.textContent = libro.ID_LIBRO;
-  // detailAutor.textContent = libro.AUTOR;
-  // detailEditorial.textContent = libro.EDITORIAL;
-  // detailProcedencia.textContent = libro.PROCEDENCIA;
-  detailContainer.hidden = false;
-}
-function selectSuggestion(libro) {
-  clearSuggestions();
-  searchInput.value = "";
-  showDetail(libro);
-}
 
-searchInput.addEventListener("input", (e) => {
-  const q = e.target.value.trim().toLowerCase();
-  clearSuggestions();
-  if (!q) return;
-
-  const matches = data2.filter(
-    (r) =>
-      (r.ID_LIBRO && r.ID_LIBRO.toString().toLowerCase().includes(q)) ||
-      (r.TITULO && r.TITULO.toLowerCase().includes(q))
-  );
-
-  if (matches.length === 0) {
-    const li = document.createElement("li");
-    li.textContent = "No hay resultados";
-    suggestionsList.append(li);
-    suggestionsList.hidden = false;
-    return;
-  }
-
-  matches.slice(0, 3).forEach((libro) => {
-    const li = document.createElement("li");
-    li.textContent = `${libro.TITULO} (ID: ${libro.ID_LIBRO})`;
-    li.addEventListener("click", () => selectSuggestion(libro));
-    suggestionsList.append(li);
-  });
-  suggestionsList.hidden = false;
-});
-
-document.addEventListener("click", (e) => {
-  if (!suggestionsList.contains(e.target) && e.target !== searchInput) {
-    clearSuggestions();
-  }
-});
 
 // ——— 5) Manejo del formulario: agregar nuevo libro ———
 formPrestamo.addEventListener("submit", (e) => {
